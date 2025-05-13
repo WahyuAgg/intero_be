@@ -139,7 +139,9 @@ class GoogleAuthController extends Controller
         }
 
         $client = new Google_Client();
-        $client->setAuthConfig(storage_path('app/google/credentials.json'));
+        $client->setClientId(env('GOOGLE_CLIENT_ID'));
+        $client->setClientSecret(env('GOOGLE_CLIENT_SECRET'));
+        $client->setRedirectUri(env('GOOGLE_REDIRECT_URI'));
         $client->setAccessType('offline');
         $client->setScopes([
             // Google Classroom Scopes
