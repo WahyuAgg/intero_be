@@ -40,7 +40,7 @@ Route::middleware('auth:sanctum')->prefix('courses')->group(function () {
 Route::middleware('auth:sanctum')->prefix('courses/{courseId}/announcements')->group(function () {
     Route::get('/', [AnnouncementController::class, 'index']);
     Route::post('/', [AnnouncementController::class, 'store']);
-    Route::delete('{announcementId}', [AnnouncementController::class, 'destroy']);
+    Route::delete('courses/{courseId}/announcements/{announcementId}', [AnnouncementController::class, 'destroy']);
 });
 
 
@@ -162,7 +162,7 @@ Route::middleware('auth:sanctum')->get('/user-profiles/{userId}', [UserProfileCo
 | LMS Auth Routes
 |--------------------------------------------------------------------------
 */
-use App\Http\Controllers\AuthController;
+use App\Http\Controllers\AuthController; 
 
 Route::prefix('auth')->group(function () {
     Route::post('/register', [AuthController::class, 'register']);
@@ -208,4 +208,3 @@ Route::middleware('auth:sanctum')->get('/test/get-refresh-token', function () {
         'refresh_token' => $user->google_refresh_token
     ]);
 });
-
