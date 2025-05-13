@@ -4,7 +4,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GoogleAuthController;
 
-
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\AnnouncementController;
 use App\Http\Controllers\CourseWorkController;
@@ -71,8 +70,6 @@ Route::middleware('auth:sanctum')->prefix('courses/{courseId}/coursework/{course
     Route::post('/{submissionId}/grade', [SubmissionController::class, 'grade']);
     Route::post('/{submissionId}/return', [SubmissionController::class, 'returnSubmission']);
     Route::post('/{submissionId}/turnin', [SubmissionController::class, 'turnIn']);
-    Route::post('/{submissionId}/attach', [SubmissionController::class, 'attachFile']);
-    Route::post('/{submissionId}/turnin-with-attachment', [SubmissionController::class, 'turnInWithAttachment']);
 
 });
 
