@@ -32,26 +32,27 @@ class GoogleAuthController extends Controller
         $client->setPrompt('consent');     // Penting agar refresh_token dikirim ulang
         $client->setScopes([
             // Google Classroom Scopes
-            'https://www.googleapis.com/auth/classroom.courses',                                // Untuk mengelola kursus
-            'https://www.googleapis.com/auth/classroom.rosters',                            // Untuk mengelola siswa dan guru
-            'https://www.googleapis.com/auth/classroom.coursework.students',                    // Untuk mengelola tugas siswa
-            'https://www.googleapis.com/auth/classroom.coursework.me',                          // Untuk mengelola tugas pengguna yang login
-            'https://www.googleapis.com/auth/classroom.student-submissions.students.readonly',       // Untuk mengelola pengumpulan tugas siswa
-            'https://www.googleapis.com/auth/classroom.student-submissions.me.readonly',        // Untuk melihat pengumpulan tugas pengguna
-            'https://www.googleapis.com/auth/classroom.topics',                             // Untuk mengelola topik kursus
-            'https://www.googleapis.com/auth/classroom.announcements',                      // Untuk mengelola pengumuman
-            'https://www.googleapis.com/auth/classroom.guardianlinks.students',             // Untuk mengelola wali siswa
-            'https://www.googleapis.com/auth/classroom.courseworkmaterials',                // Untuk mengelola file materi tugas
-            'https://www.googleapis.com/auth/classroom.push-notifications',                 // Untuk menerima notifikasi push
+            'https://www.googleapis.com/auth/classroom.courses',
+            'https://www.googleapis.com/auth/classroom.rosters',
+            'https://www.googleapis.com/auth/classroom.coursework.students',
+            'https://www.googleapis.com/auth/classroom.coursework.me',
+            'https://www.googleapis.com/auth/classroom.student-submissions.students.readonly',
+            'https://www.googleapis.com/auth/classroom.student-submissions.me.readonly',
+            'https://www.googleapis.com/auth/classroom.topics',
+            'https://www.googleapis.com/auth/classroom.announcements',
+            'https://www.googleapis.com/auth/classroom.guardianlinks.students',
+            'https://www.googleapis.com/auth/classroom.courseworkmaterials',
+            'https://www.googleapis.com/auth/classroom.push-notifications',
+            'https://www.googleapis.com/auth/userinfo.profile',
+            'https://www.googleapis.com/auth/userinfo.email',
+            'openid',
 
-            // Google Drive Scope
-            // 'https://www.googleapis.com/auth/drive',                                        // Untuk mengakses Google Drive
-
-            // Google UserInfo Scopes
-            'https://www.googleapis.com/auth/userinfo.profile',                             // Untuk mengakses profil pengguna
-            'https://www.googleapis.com/auth/userinfo.email',                               // Untuk mengakses email pengguna
-            'openid',                                                                       // Untuk mengakses OpenID Connect
+            // Tambahan untuk akses admin/domain-wide delegation
+            'https://www.googleapis.com/auth/admin.directory.user.readonly',
+            'https://www.googleapis.com/auth/classroom.profile.emails',
+            'https://www.googleapis.com/auth/classroom.profile.photos',
         ]);
+
 
         // Tambahkan state unik (opsional, untuk keamanan)
         $state = base64_encode(json_encode([
@@ -159,7 +160,13 @@ class GoogleAuthController extends Controller
             'https://www.googleapis.com/auth/userinfo.profile',
             'https://www.googleapis.com/auth/userinfo.email',
             'openid',
+
+            // Tambahan untuk akses admin/domain-wide delegation
+            'https://www.googleapis.com/auth/admin.directory.user.readonly',
+            'https://www.googleapis.com/auth/classroom.profile.emails',
+            'https://www.googleapis.com/auth/classroom.profile.photos',
         ]);
+
 
         // Set access_token semestara dengan refresh token
         $client->setAccessToken(['access_token' => $refreshToken]);
