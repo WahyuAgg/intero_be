@@ -56,15 +56,16 @@ class CourseWorkController extends Controller
             'workType' => 'ASSIGNMENT',
             'state' => 'PUBLISHED',
             'maxPoints' => $request->input('max_points', 100),
-            'dueDate' => [
-                'year' => $request->input('due_year'),
-                'month' => $request->input('due_month'),
-                'day' => $request->input('due_day'),
-            ],
-            'dueTime' => [
-                'hours' => $request->input('due_hour', 23),
-                'minutes' => $request->input('due_minute', 59),
-            ],
+            'dueDate' => new \Google_Service_Classroom_Date([
+            'year' => $request->input('due_year'),
+            'month' => $request->input('due_month'),
+            'day' => $request->input('due_day'),
+        ]),
+            'dueTime' => new \Google_Service_Classroom_TimeOfDay([
+            'hours' => $request->input('due_hour', 23),
+            'minutes' => $request->input('due_minute', 59),
+        ]),
+
             'submissionModificationMode' => 'MODIFIABLE_UNTIL_TURNED_IN'
         ]);
 
@@ -86,7 +87,7 @@ class CourseWorkController extends Controller
 
         try {
             $courseWork = $classroom->courses_courseWork->get($courseId, $courseWorkId);
-            return response()->json($courseWork);
+            return response()->json(data: $courseWork);
         } catch (\Google_Service_Exception $e) {
             return response()->json([
                 'message' => 'Failed to fetch coursework detail',
