@@ -209,3 +209,6 @@ Route::middleware('auth:sanctum')->get('/test/get-refresh-token', function () {
     ]);
 });
 
+Route::get('/', function () {
+    return view('welcome');
+});
