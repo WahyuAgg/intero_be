@@ -2,15 +2,20 @@
 
 ### pemilik proyek
 theprocrastinatorman@gmail.com
-andromeda445
+
+password google :   andromeda445
 
 ### Teacher
-theprocrastinatorman@gmail.com
-andromeda445
+theprocrastinationman@gmail.com
+
+password google :   andromeda445
+password lms    :   lavachicken
 
 ## Student
 ibnumknd@gmail.com
-exagon.enter
+
+password google :   exagon.enter
+password lms    :   lavachicken
 
 
 
