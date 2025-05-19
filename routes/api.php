@@ -40,7 +40,6 @@ Route::middleware('auth:sanctum')->prefix('courses')->group(function () {
 Route::middleware('auth:sanctum')->prefix('courses/{courseId}/announcements')->group(function () {
     Route::get('/', [AnnouncementController::class, 'index']);
     Route::post('/', [AnnouncementController::class, 'store']);
-    Route::delete('courses/{courseId}/announcements/{announcementId}', [AnnouncementController::class, 'destroy']);
 });
 
 
@@ -80,13 +79,15 @@ Route::middleware('auth:sanctum')->prefix('courses/{courseId}/coursework/{course
 | Material Routes
 |--------------------------------------------------------------------------
 */
-Route::middleware('auth:sanctum')->prefix('materials')->group(function () {
-    Route::get('{courseId}', [MaterialController::class, 'index']);
-    Route::post('{courseId}', [MaterialController::class, 'store']);
-    Route::get('{courseId}/{materialId}', [MaterialController::class, 'show']);
-    Route::put('{courseId}/{materialId}', [MaterialController::class, 'update']);
-    Route::delete('{courseId}/{materialId}', [MaterialController::class, 'destroy']);
+Route::middleware('auth:sanctum')->prefix('classroom/courses/{courseId}/materials')->group(function () {
+    Route::get('/', [MaterialController::class, 'index']);
+    Route::post('/', [MaterialController::class, 'store']);
+    Route::get('/{materialId}', [MaterialController::class, 'show']);
+    Route::put('/{materialId}', [MaterialController::class, 'update']);
+    Route::delete('/{materialId}', [MaterialController::class, 'destroy']);
 });
+
+
 
 
 
