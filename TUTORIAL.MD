@@ -1,3 +1,19 @@
+## akun pemilik proyek
+
+### pemilik proyek
+theprocrastinatorman@gmail.com
+andromeda445
+
+### Teacher
+theprocrastinatorman@gmail.com
+andromeda445
+
+## Student
+ibnumknd@gmail.com
+exagon.enter
+
+
+
 ## Tutorial install BE
 - git clone
 - composer install
