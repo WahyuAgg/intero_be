@@ -6,7 +6,7 @@ theprocrastinatorman@gmail.com
 password google :   andromeda445
 
 ### Teacher
-theprocrastinationman@gmail.com
+theprocrastinatorman@gmail.com
 
 password google :   andromeda445
 password lms    :   lavachicken

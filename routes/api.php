@@ -186,6 +186,26 @@ Route::prefix('google')->group(function () {
 });
 
 
+
+/*
+|--------------------------------------------------------------------------
+| User Management Routes For testing only
+|--------------------------------------------------------------------------
+*/
+use App\Http\Controllers\UserController;
+
+Route::prefix('user')->group(function () {
+    Route::get('/', [UserController::class, 'index']);
+    Route::post('/', [UserController::class, 'store']);
+    Route::get('{id}', [UserController::class, 'show']);
+    Route::put('{id}', [UserController::class, 'update']);
+    Route::delete('{id}', [UserController::class, 'destroy']);
+
+    // Tambahan: Get user by email
+    Route::get('email/{email}', [UserController::class, 'findByEmail']);
+});
+
+
 /*
 |--------------------------------------------------------------------------
 | LMS Testing Routes
