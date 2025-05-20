@@ -69,6 +69,8 @@ Route::middleware('auth:sanctum')->prefix('courses/{courseId}/coursework/{course
     Route::post('/{submissionId}/grade', [SubmissionController::class, 'grade']);
     Route::post('/{submissionId}/return', [SubmissionController::class, 'returnSubmission']);
     Route::post('/{submissionId}/turnin', [SubmissionController::class, 'turnIn']);
+    Route::post('/{submissionId}/attachments', [SubmissionController::class, 'modifyAttachment']);
+
 
 });
 
@@ -140,10 +142,7 @@ Route::middleware('auth:sanctum')->prefix('topics')->group(function () {
 |--------------------------------------------------------------------------
 */
 Route::middleware('auth:sanctum')->prefix('invitations')->group(function () {
-    Route::get('/', [InvitationController::class, 'index']);
-    Route::get('{invitationId}', [InvitationController::class, 'show']);
     Route::post('/', [InvitationController::class, 'store']);
-    Route::delete('{invitationId}', [InvitationController::class, 'destroy']);
 });
 
 

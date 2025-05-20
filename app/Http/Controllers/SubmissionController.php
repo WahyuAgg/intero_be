@@ -4,6 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Google_Service_Classroom;
+use Google_Client;
+use Google_Service_Classroom_ModifyAttachmentsRequest;
+use Google_Service_Classroom_Link;
+// use Google_Service_Classroom_ModifyAttachmentsRequest;
+
 
 class SubmissionController extends Controller
 {
@@ -143,5 +149,42 @@ class SubmissionController extends Controller
             ], 400);
         }
     }
+
+    public function modifyAttachment(Request $request, $courseId, $courseWorkId, $submissionId)
+    {
+        $request->validate([
+            'url' => 'required|url',
+            'title' => 'nullable|string',
+        ]);
+
+        $user = Auth::user();
+        $classroom = $this->getGoogleService($user);
+
+        try {
+            $linkAttachment = new \Google_Service_Classroom_Attachment([
+                'link' => [
+                    'url' => $request->input('url')
+                ]
+            ]);
+
+            $modifyRequest = new Google_Service_Classroom_ModifyAttachmentsRequest([
+                'addAttachments' => [$linkAttachment]
+            ]);
+
+            $response = $classroom->courses_courseWork_studentSubmissions
+                ->modifyAttachments($courseId, $courseWorkId, $submissionId, $modifyRequest);
+
+            return response()->json([
+                'message' => 'Attachment berhasil ditambahkan ke submission.',
+                'response' => $response
+            ]);
+        } catch (\Google_Service_Exception $e) {
+            return response()->json([
+                'message' => 'Gagal menambahkan attachment',
+                'error' => $e->getMessage()
+            ], 400);
+        }
+    }
+
 
 }

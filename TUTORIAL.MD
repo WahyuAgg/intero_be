@@ -51,8 +51,17 @@ password lms    :   lavachicken
     -- setiap request harus menggunakan bearer token
 
 
-## catatan
+## alur request
 
-tpm-02@classroom-integration-project.iam.gserviceaccount.com
+- api_token (bearer token) =
+user api token untuk autentikasi ke sistem lms menggunakan auth sanctum bearer token
+
+
+- google_token =
+meliputi (google_access_token, google_refrsh_token, google_token_expires_at)
+token yang diperoleh dari google, untuk otentikasi dan login ke user's google_account.
+
+	  api_token		   google_token
+fe >------------> be >--------------> google
 
 
