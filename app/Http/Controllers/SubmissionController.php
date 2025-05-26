@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use Google\Service\Classroom\ReturnStudentSubmissionRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Google_Service_Classroom;
 use Google_Client;
 use Google_Service_Classroom_ModifyAttachmentsRequest;
 use Google_Service_Classroom_Link;
-// use Google_Service_Classroom_ModifyAttachmentsRequest;
+use Google\Service\Classroom\TurnInStudentSubmissionRequest;
 
 
 class SubmissionController extends Controller
@@ -109,7 +110,10 @@ class SubmissionController extends Controller
     }
 
     /**
-     * Return (return submission to student)
+     * Return a student's submission
+     */
+    /**
+     * Return a student's submission
      */
     public function returnSubmission($courseId, $courseWorkId, $submissionId)
     {
@@ -117,17 +121,35 @@ class SubmissionController extends Controller
         $classroom = $this->getGoogleService($user);
 
         try {
-            $classroom->courses_courseWork_studentSubmissions
-                ->classroomCoursesCourseWorkStudentSubmissionsReturn($courseId, $courseWorkId, $submissionId);
+            $classroom->courses_courseWork_studentSubmissions->call(
+                'return',
+                [
+                    'courseId' => $courseId,
+                    'courseWorkId' => $courseWorkId,
+                    'id' => $submissionId,
+                    'postBody' => new \Google\Model([]), // send empty body
+                ]
+            );
 
-            return response()->json(['message' => 'Submission returned to student']);
-        } catch (\Google_Service_Exception $e) {
+            return response()->json(['message' => 'Tugas berhasil dikembalikan ke siswa (RETURNED).']);
+        } catch (\Google\Service\Exception $e) {
             return response()->json([
-                'message' => 'Failed to return submission',
+                'message' => 'Gagal mengembalikan tugas.',
                 'error' => $e->getMessage(),
             ], 400);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Kesalahan sistem.',
+                'error' => $e->getMessage(),
+            ], 500);
         }
     }
+
+
+
+
+
+
 
     /**
      * Mark submission as TURNED_IN
@@ -138,17 +160,26 @@ class SubmissionController extends Controller
         $classroom = $this->getGoogleService($user);
 
         try {
-            $classroom->courses_courseWork_studentSubmissions
-                ->turnIn($courseId, $courseWorkId, $submissionId);
+            $request = new TurnInStudentSubmissionRequest();
 
-            return response()->json(['message' => 'Submission marked as TURNED_IN']);
+            $classroom->courses_courseWork_studentSubmissions->turnIn(
+                $courseId,
+                $courseWorkId,
+                $submissionId,
+                $request
+            );
+
+            return response()->json(['message' => 'Tugas berhasil dikumpulkan (TURNED_IN).']);
         } catch (\Google_Service_Exception $e) {
             return response()->json([
-                'message' => 'Failed to turn in submission',
+                'message' => 'Gagal mengumpulkan tugas.',
                 'error' => $e->getMessage(),
             ], 400);
         }
     }
+
+
+
 
     public function modifyAttachment(Request $request, $courseId, $courseWorkId, $submissionId)
     {

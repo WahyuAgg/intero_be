@@ -75,11 +75,9 @@ Route::middleware('auth:sanctum')->prefix('courses/{courseId}/coursework/{course
     Route::get('/', [SubmissionController::class, 'index']);
     Route::get('/{submissionId}', [SubmissionController::class, 'show']);
     Route::post('/{submissionId}/grade', [SubmissionController::class, 'grade']);
-    Route::post('/{submissionId}/return', [SubmissionController::class, 'returnSubmission']);
+    Route::get('/{submissionId}/return', [SubmissionController::class, 'returnSubmission']);
     Route::post('/{submissionId}/turnin', [SubmissionController::class, 'turnIn']);
     Route::post('/{submissionId}/attachments', [SubmissionController::class, 'modifyAttachment']);
-
-
 });
 
 
@@ -188,7 +186,7 @@ Route::prefix('auth')->group(function () {
 */
 
 Route::prefix('google')->group(function () {
-    Route::middleware('auth:sanctum')->get('/initiate', [GoogleAuthController::class, 'initiate']);
+    Route::get('/initiate', [GoogleAuthController::class, 'initiate']);
     Route::get('/callback', [GoogleAuthController::class,'callback']);
     Route::get('/refresh-token/{userId}', [GoogleAuthController::class,'refreshToken']);
 });
