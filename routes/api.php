@@ -126,22 +126,6 @@ Route::middleware('auth:sanctum')->prefix('teachers')->group(function () {
 });
 
 
-
-/*
-|--------------------------------------------------------------------------
-| Topics Routes
-|--------------------------------------------------------------------------
-*/
-Route::middleware('auth:sanctum')->prefix('topics')->group(function () {
-    Route::get('{courseId}', [TopicController::class, 'index']);
-    Route::get('{courseId}/{topicId}', [TopicController::class, 'show']);
-    Route::post('{courseId}', [TopicController::class, 'store']);
-    Route::put('{courseId}/{topicId}', [TopicController::class, 'update']);
-    Route::delete('{courseId}/{topicId}', [TopicController::class, 'destroy']);
-});
-
-
-
 /*
 |--------------------------------------------------------------------------
 | Invitation Routes
@@ -193,48 +177,62 @@ Route::prefix('google')->group(function () {
 
 
 
-/*
-|--------------------------------------------------------------------------
-| User Management Routes For testing only
-|--------------------------------------------------------------------------
-*/
-use App\Http\Controllers\UserController;
+// /*
+// |--------------------------------------------------------------------------
+// | User Management Routes For testing only
+// |--------------------------------------------------------------------------
+// */
+// use App\Http\Controllers\UserController;
 
-Route::prefix('user')->group(function () {
-    Route::get('/', [UserController::class, 'index']);
-    Route::post('/', [UserController::class, 'store']);
-    Route::get('{id}', [UserController::class, 'show']);
-    Route::put('{id}', [UserController::class, 'update']);
-    Route::delete('{id}', [UserController::class, 'destroy']);
+// Route::prefix('user')->group(function () {
+//     Route::get('/', [UserController::class, 'index']);
+//     Route::post('/', [UserController::class, 'store']);
+//     Route::get('{id}', [UserController::class, 'show']);
+//     Route::put('{id}', [UserController::class, 'update']);
+//     Route::delete('{id}', [UserController::class, 'destroy']);
 
-    // Tambahan: Get user by email
-    Route::get('email/{email}', [UserController::class, 'findByEmail']);
-});
+//     // Tambahan: Get user by email
+//     Route::get('email/{email}', [UserController::class, 'findByEmail']);
+// });
 
 
-/*
-|--------------------------------------------------------------------------
-| LMS Testing Routes
-|--------------------------------------------------------------------------
-*/
+// /*
+// |--------------------------------------------------------------------------
+// | LMS Testing Routes
+// |--------------------------------------------------------------------------
+// */
 
-Route::prefix('test')->group(function () {
-    Route::middleware('auth:sanctum')->post('/initiate', [GoogleAuthController::class, 'initiate']);
-    Route::post('/callback', [GoogleAuthController::class, 'callback']);
-});
+// Route::prefix('test')->group(function () {
+//     Route::middleware('auth:sanctum')->post('/initiate', [GoogleAuthController::class, 'initiate']);
+//     Route::post('/callback', [GoogleAuthController::class, 'callback']);
+// });
 
-Route::middleware('auth:sanctum')->get('/test_sanctum', function () {
-    return response()->json(['message' => 'API jalan!']);
-});
+// Route::middleware('auth:sanctum')->get('/test_sanctum', function () {
+//     return response()->json(['message' => 'API jalan!']);
+// });
 
-Route::middleware('auth:sanctum')->get('/test/get-refresh-token', function () {
-    $user = Auth::user();
+// Route::middleware('auth:sanctum')->get('/test/get-refresh-token', function () {
+//     $user = Auth::user();
 
-    return response()->json([
-        'refresh_token' => $user->google_refresh_token
-    ]);
-});
+//     return response()->json([
+//         'refresh_token' => $user->google_refresh_token
+//     ]);
+// });
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
+
+// /*
+// |--------------------------------------------------------------------------
+// | Topics Routes
+// |--------------------------------------------------------------------------
+// */
+// Route::middleware('auth:sanctum')->prefix('topics')->group(function () {
+//     Route::get('{courseId}', [TopicController::class, 'index']);
+//     Route::get('{courseId}/{topicId}', [TopicController::class, 'show']);
+//     Route::post('{courseId}', [TopicController::class, 'store']);
+//     Route::put('{courseId}/{topicId}', [TopicController::class, 'update']);
+//     Route::delete('{courseId}/{topicId}', [TopicController::class, 'destroy']);
+// });
