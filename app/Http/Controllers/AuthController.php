@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Controllers\GoogleAuthController;
 
 class AuthController extends Controller
 {
@@ -36,10 +37,15 @@ class AuthController extends Controller
             'expires_at' => $token_expired, // Expire in 1 hour
         ]);
 
+        // Refresh Google token
+        $googleAuthController = new GoogleAuthController();
+        $googleRefreshResponse = $googleAuthController->refreshToken($user->id);
+
         return response()->json([
             'access_token' => $token,
             'token_type' => 'Bearer',
             'expires_at' => $token_expired,
+            'googs_token' => $googleRefreshResponse->original,
         ]);
     }
 
