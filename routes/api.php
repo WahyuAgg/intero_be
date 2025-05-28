@@ -186,7 +186,7 @@ Route::prefix('auth')->group(function () {
 */
 
 Route::prefix('google')->group(function () {
-    Route::get('/initiate', [GoogleAuthController::class, 'initiate']);
+    Route::middleware('auth:sanctum')->get('/initiate', [GoogleAuthController::class, 'initiate']);
     Route::get('/callback', [GoogleAuthController::class,'callback']);
     Route::get('/refresh-token/{userId}', [GoogleAuthController::class,'refreshToken']);
 });

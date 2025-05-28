@@ -65,7 +65,7 @@ class GoogleAuthController extends Controller
         $authUrl = $client->createAuthUrl();
 
         return response()->json([
-            'google_login_url' => $authUrl
+            'google_auth_url' => $authUrl
         ]);
     }
 
