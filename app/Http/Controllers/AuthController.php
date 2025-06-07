@@ -43,6 +43,7 @@ class AuthController extends Controller
 
         return response()->json([
             'access_token' => $token,
+            'user' => $user,
             'token_type' => 'Bearer',
             'expires_at' => $token_expired,
             'googs_token' => $googleRefreshResponse->original,
