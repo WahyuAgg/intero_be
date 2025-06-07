@@ -40,15 +40,6 @@ Route::middleware('auth:sanctum')->prefix('courses')->group(function () {
 
 
 
-/*
-|--------------------------------------------------------------------------
-| Announcement Routes
-|--------------------------------------------------------------------------
-*/
-Route::middleware('auth:sanctum')->prefix('courses/{courseId}/announcements')->group(function () {
-    Route::get('/', [AnnouncementController::class, 'index']);
-    Route::post('/', [AnnouncementController::class, 'store']);
-});
 
 
 
@@ -175,25 +166,47 @@ Route::prefix('google')->group(function () {
     Route::get('/refresh-token/{userId}', [GoogleAuthController::class,'refreshToken']);
 });
 
+/*
+|--------------------------------------------------------------------------
+| Topics Routes
+|--------------------------------------------------------------------------
+*/
+Route::middleware('auth:sanctum')->prefix('topics')->group(function () {
+    Route::get('{courseId}', [TopicController::class, 'index']);
+    Route::get('{courseId}/{topicId}', [TopicController::class, 'show']);
+    Route::post('{courseId}', [TopicController::class, 'store']);
+    Route::put('{courseId}/{topicId}', [TopicController::class, 'update']);
+    Route::delete('{courseId}/{topicId}', [TopicController::class, 'destroy']);
+});
+
+/*
+|--------------------------------------------------------------------------
+| Announcement Routes
+|--------------------------------------------------------------------------
+*/
+Route::middleware('auth:sanctum')->prefix('courses/{courseId}/announcements')->group(function () {
+    Route::get('/', [AnnouncementController::class, 'index']);
+    Route::post('/', [AnnouncementController::class, 'store']);
+});
 
 
-// /*
-// |--------------------------------------------------------------------------
-// | User Management Routes For testing only
-// |--------------------------------------------------------------------------
-// */
-// use App\Http\Controllers\UserController;
+/*
+|--------------------------------------------------------------------------
+| User Management Routes For testing only
+|--------------------------------------------------------------------------
+*/
+use App\Http\Controllers\UserController;
 
-// Route::prefix('user')->group(function () {
-//     Route::get('/', [UserController::class, 'index']);
-//     Route::post('/', [UserController::class, 'store']);
-//     Route::get('{id}', [UserController::class, 'show']);
-//     Route::put('{id}', [UserController::class, 'update']);
-//     Route::delete('{id}', [UserController::class, 'destroy']);
+Route::prefix('user')->group(function () {
+    Route::get('/', [UserController::class, 'index']);
+    Route::post('/', [UserController::class, 'store']);
+    Route::get('{id}', [UserController::class, 'show']);
+    Route::put('{id}', [UserController::class, 'update']);
+    Route::delete('{id}', [UserController::class, 'destroy']);
 
-//     // Tambahan: Get user by email
-//     Route::get('email/{email}', [UserController::class, 'findByEmail']);
-// });
+    // Tambahan: Get user by email
+    Route::get('email/{email}', [UserController::class, 'findByEmail']);
+});
 
 
 // /*
@@ -224,15 +237,3 @@ Route::prefix('google')->group(function () {
 // });
 
 
-// /*
-// |--------------------------------------------------------------------------
-// | Topics Routes
-// |--------------------------------------------------------------------------
-// */
-// Route::middleware('auth:sanctum')->prefix('topics')->group(function () {
-//     Route::get('{courseId}', [TopicController::class, 'index']);
-//     Route::get('{courseId}/{topicId}', [TopicController::class, 'show']);
-//     Route::post('{courseId}', [TopicController::class, 'store']);
-//     Route::put('{courseId}/{topicId}', [TopicController::class, 'update']);
-//     Route::delete('{courseId}/{topicId}', [TopicController::class, 'destroy']);
-// });

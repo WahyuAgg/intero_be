@@ -6,7 +6,6 @@ Proyek ini adalah **API backend** berbasis **Laravel** yang berfungsi sebagai **
 
 - 🔐 Autentikasi menggunakan **Google OAuth 2.0**
 - 📚 Manajemen **Courses**
-- 📢 Manajemen **Announcements**
 - 📝 Manajemen **CourseWork**
 - 📄 Manajemen **Student Submissions**
 - ✍️ Manajemen **Penilaian**
@@ -14,25 +13,28 @@ Proyek ini adalah **API backend** berbasis **Laravel** yang berfungsi sebagai **
 ## 📦 Teknologi yang Digunakan
 
 - Laravel Framework 11.44.7
-- PHP 8.2.12 (cli)
-- Google API Client for PHP
-- MySQL / MariaDB
-- Laravel Sanctum
+- PHP 8.2.12
+- Google API Client for PHP 2.15.4
+- MySQL / MariaDB 8.0.3.0
+- Laravel Sanctum 4.0
 
 ## ⚙️ Instalasi
 
 1. **Clone Repository**
+
    ```bash
    git clone https://github.com/WahyuAgg/intero_be.git
    cd intero_be
    ```
 
 2. **Instalasi Dependency**
+
    ```bash
    composer install
    ```
 
 3. **Salin File `.env` dan Konfigurasi**
+
    ```bash
    cp .env.example .env
    php artisan key:generate
@@ -40,6 +42,7 @@ Proyek ini adalah **API backend** berbasis **Laravel** yang berfungsi sebagai **
 
 4. **Konfigurasi Database dan Google API**
    Atur file `.env` Anda seperti berikut:
+
    ```env
    DB_CONNECTION=mysql
    DB_HOST=127.0.0.1
@@ -54,45 +57,203 @@ Proyek ini adalah **API backend** berbasis **Laravel** yang berfungsi sebagai **
    ```
 
 5. **Migrasi Database**
+
    ```bash
-   php artisan migrate
+   php artisan migrate:fresh
    ```
 
 6. **Jalankan Server**
+
    ```bash
    php artisan serve
    ```
 
-## 🔑 Autentikasi Google OAuth
+## 🤵 Sampel akun (untuk testing)
 
-Frontend perlu mengarahkan pengguna ke:
-```
-GET /api/google/login
-```
+### Akun pemilik proyek / Sample Teacher
 
-Setelah login, pengguna akan diarahkan kembali melalui callback:
-```
-GET /api/google/callback
-```
+- **email** : [theprocrastinatorman@gmail.com](theprocrastinatorman@gmail.com)
+- **password google account** :   andromeda445
+- **default password lms**   :   lavachicken
+
+
+### Akun Sample Student
+
+- **email** : [ibnumknd@gmail.com](ibnumknd@gmail.com)
+- **password google account** :   exagon.enter
+- **default password lms**   :   lavachicken
+
+### Keterangan Password
+
+- **password lms** adalah password untuk akun LMS yang dibuat ketika register, bisa disesuaikan ketika melakukan regiter melalui LMS dan berlaku untuk login melalui LMS.
+
+- **password google account** adalah password akun google, yaitu akun yang terdaftar di dengan google bukan LMS.
+
+## 🔑 Autentikasi Google OAuth dan Koneksi ke Google Classsroom
+
+> ⚠️ Register dan Autentikasi hanya bisa menggunakan **Sampel akun** yang sudah terdaftar di proyek **google cloud console**
+
+> ℹ️ Untuk melakukan testing menggunakan akun lain, daftarkan akun kedalam proyek Classroom API di **Google cloud console**
+
+> ☁️ Masuk ke google cloud console bisa menggunakan **Akun pemilik proyek**
+
+
+1. 📝 Register (Jika belum punya akun)
+    **endpoint:** /api/auth/register
+    *membuat password lms*
+    **return** Bearer Token.
+    <br>
+
+2. ✔️ Inisiasi koneksi ke akun google
+    /api/google/initiate
+    **parameter**: Bearer Token.
+    **return** *google_login_url* : https://accounts.google.com/....
+    <br>
+
+3. 📶 Sambungkan akun LMS dengan akun google<br>
+    a. Buka *google_login_url* ayng sudah didapatkan sebelumnya
+    *google_login_url* : https://accounts.google.com/....<br>
+    b. Sambungkan dengan akun google berikut
+        Autentikasi OAuth menggunakan google account terkait:
+    - Untuk Teacher (guru)
+
+        - email : [theprocrastinatorman@gmail.com](theprocrastinatorman@gmail.com)
+
+        - password google account :   andromeda445
+
+    - Untuk student (siswa)
+
+        - email : [ibnumknd@gmail.com](ibnumknd@gmail.com)
+
+        - password google account :   exagon.enter
+    ,
+
+4. Akses API
+    - **Bearer Token** harus digunakan ntuk setiap kali mengakses endpoint API.
 
 Token yang diperoleh digunakan untuk mengakses endpoint Google Classroom melalui API wrapper ini.
 
 ## 📁 Struktur Endpoint
 
+### 🔐 Auth
+
 | Endpoint | Method | Deskripsi |
 |----------|--------|-----------|
-| `/api/google/login` | GET | Redirect ke halaman login Google |
+| `/api/auth/register` | POST | Register user baru |
+| `/api/auth/login` | POST | Login user dan dapatkan token |
+| `/api/auth/logout` | POST | Logout dan cabut token |
+
+### 👤 User (LMS)
+
+| Endpoint | Method | Deskripsi |
+|----------|--------|-----------|
+| `/api/user` | GET | Data user yang sedang login |
+| `/api/user` | POST | Tambah user baru (testing only) |
+| `/api/user/{id}` | GET | Lihat detail user (testing only) |
+| `/api/user/{id}` | PUT | Update user (testing only) |
+| `/api/user/{id}` | DELETE | Hapus user (testing only) |
+| `/api/user/email/{email}` | GET | Cari user berdasarkan email (testing only) |
+
+### 👤 User (Google Classroom)
+
+| Endpoint | Method | Deskripsi |
+|----------|--------|-----------|
+| `/api/user-profiles/{userId}` | GET | Lihat profil user berdasarkan ID |
+
+### 🔑 Google Auth
+
+| Endpoint | Method | Deskripsi |
+|----------|--------|-----------|
+| `/api/google/initiate` | GET | Redirect ke halaman login Google |
 | `/api/google/callback` | GET | Callback dari Google |
-| `/api/courses` | GET | Ambil semua course milik user |
-| `/api/courses/{id}/announcements` | GET | Ambil pengumuman dari course |
-| `/api/courses/{id}/courseWork` | GET | Ambil daftar tugas dari course |
-| `/api/courses/{courseId}/courseWork/{workId}/submissions` | GET | Ambil submissions dari suatu tugas |
+| `/api/google/refresh-token/{userId}` | GET | Refresh token Google user |
+
+### 📚 Courses
+
+| Endpoint | Method | Deskripsi |
+|----------|--------|-----------|
+| `/api/courses` | GET | Ambil semua course |
+| `/api/courses` | POST | Tambah course baru |
+| `/api/courses/{id}` | GET | Lihat detail course |
+| `/api/courses/{id}` | PUT | Update course |
+| `/api/courses/{id}` | DELETE | Hapus course |
+
+### 📢 Announcements
+
+| Endpoint | Method | Deskripsi |
+|----------|--------|-----------|
+| `/api/courses/{courseId}/announcements` | GET | Ambil pengumuman dari course |
+| `/api/courses/{courseId}/announcements` | POST | Tambah pengumuman ke course |
+
+### 📝 Course Work
+
+| Endpoint | Method | Deskripsi |
+|----------|--------|-----------|
+| `/api/courses/{courseId}/coursework` | GET | Ambil daftar tugas dari course |
+| `/api/courses/{courseId}/coursework` | POST | Tambah tugas baru |
+| `/api/courses/{courseId}/coursework/{courseWorkId}` | GET | Lihat detail tugas |
+| `/api/courses/{courseId}/coursework/{courseWorkId}` | DELETE | Hapus tugas |
+
+### 📤 Submissions
+
+| Endpoint | Method | Deskripsi |
+|----------|--------|-----------|
+| `/api/courses/{courseId}/coursework/{courseWorkId}/submissions` | GET | Ambil semua submission dari tugas |
+| `/api/courses/{courseId}/coursework/{courseWorkId}/submissions/{submissionId}` | GET | Lihat detail submission |
+| `/api/courses/{courseId}/coursework/{courseWorkId}/submissions/{submissionId}/grade` | POST | Beri nilai pada submission |
+| `/api/courses/{courseId}/coursework/{courseWorkId}/submissions/{submissionId}/return` | GET | Kembalikan submission ke siswa |
+| `/api/courses/{courseId}/coursework/{courseWorkId}/submissions/{submissionId}/turnin` | POST | Siswa menyerahkan tugas |
+| `/api/courses/{courseId}/coursework/{courseWorkId}/submissions/{submissionId}/attachments` | POST | Tambah/ubah lampiran submission |
+
+### 📦 Materials
+
+| Endpoint | Method | Deskripsi |
+|----------|--------|-----------|
+| `/api/classroom/courses/{courseId}/materials` | GET | Ambil semua materi course |
+| `/api/classroom/courses/{courseId}/materials` | POST | Tambah materi baru |
+| `/api/classroom/courses/{courseId}/materials/{materialId}` | GET | Lihat detail materi |
+| `/api/classroom/courses/{courseId}/materials/{materialId}` | PUT | Update materi |
+| `/api/classroom/courses/{courseId}/materials/{materialId}` | DELETE | Hapus materi |
+
+### 🎯 Topics
+
+| Endpoint | Method | Deskripsi |
+|----------|--------|-----------|
+| `/api/topics/{courseId}` | GET | Ambil semua topik dalam course |
+| `/api/topics/{courseId}` | POST | Tambah topik baru |
+| `/api/topics/{courseId}/{topicId}` | GET | Lihat detail topik |
+| `/api/topics/{courseId}/{topicId}` | PUT | Update topik |
+| `/api/topics/{courseId}/{topicId}` | DELETE | Hapus topik |
+
+### 👨‍🎓 Students
+
+| Endpoint | Method | Deskripsi |
+|----------|--------|-----------|
+| `/api/students/{courseId}` | GET | Ambil semua siswa dalam course |
+| `/api/students/{courseId}` | POST | Tambah siswa ke course |
+| `/api/students/{courseId}/{userId}` | GET | Lihat detail siswa |
+| `/api/students/{courseId}/{userId}` | DELETE | Hapus siswa dari course |
+
+### 👩‍🏫 Teachers
+
+| Endpoint | Method | Deskripsi |
+|----------|--------|-----------|
+| `/api/teachers/{courseId}` | GET | Ambil semua guru dalam course |
+| `/api/teachers/{courseId}` | POST | Tambah guru ke course |
+| `/api/teachers/{courseId}/{userId}` | GET | Lihat detail guru |
+| `/api/teachers/{courseId}/{userId}` | DELETE | Hapus guru dari course |
+
+### ✉️ Invitations
+
+| Endpoint | Method | Deskripsi |
+|----------|--------|-----------|
+| `/api/invitations` | POST | Kirim undangan ke user |
 
 > ⚠️ Beberapa endpoint memerlukan token Google OAuth yang valid.
 
 ## ✅ Status
 
-🚧 **Sedang Dalam Pengembangan**
+🚧 **Selesai Pengembangan**
 Pull Request dan kontribusi sangat terbuka.
 
 ## 🤝 Kontribusi
@@ -102,82 +263,3 @@ Pull Request dan kontribusi sangat terbuka.
 3. Commit perubahan: `git commit -m 'Tambah fitur baru'`
 4. Push ke branch: `git push origin fitur-baru`
 5. Buat Pull Request
-
-## 📄 Lisensi
-
-Proyek ini berada di bawah lisensi [MIT](LICENSE).
-
-
-
-
-## akun pemilik proyek
-
-### pemilik proyek
-
-email : theprocrastinatorman@gmail.com
-
-password google :   andromeda445
-
-### Sample Teacher
-
-email : theprocrastinatorman@gmail.com
-
-password google :   andromeda445
-password lms    :   lavachicken
-
-## Sample Student
-
-email : ibnumknd@gmail.com
-
-password google :   exagon.enter
-password lms    :   lavachicken
-
-
-
-## Tutorial install API Backend
-
-- git clone
-- composer install
-
-
-
-## Tutorial Coonect ke Google Classsroom API
-
-- register
-    /api/auth/register
-
-- login
-    /api/auth/login -- pake username, password
-    -- dapat bearer token dari BE
-
-- connect ke google
-    /api/google/initiate -- pake bearer token
-
-    -- dapat google_login_url dari BE
-    -- google_login_url : https://accounts.google.com/..........
-
-- login ke google
-    buka/redirect ke link google_login_url yg didapatkan dari BE
-
-    -- cek perijinan, harus setuju
-
-    -- re-open FE page / redirect ke FE
-
-- API bisa digunakan
-    -- setiap request harus menggunakan bearer token
-
-
-## alur request
-
-- api_token (bearer token) =
-user api token untuk autentikasi ke sistem lms menggunakan auth sanctum bearer token
-
-
-- google_token =
-meliputi (google_access_token, google_refrsh_token, google_token_expires_at)
-token yang diperoleh dari google, untuk otentikasi dan login ke user's google_account.
-
-	  api_token		   google_token
-fe >------------> be >--------------> google
-
-

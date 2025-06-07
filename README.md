@@ -1,66 +1,265 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Intero Backend - Google Classroom API Wrapper
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Proyek ini adalah **API backend** berbasis **Laravel** yang berfungsi sebagai **wrapper untuk Google Classroom API**, menyederhanakan proses integrasi dan komunikasi antara aplikasi frontend dengan layanan Google Classroom.
 
-## About Laravel
+## 📌 Fitur Utama
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- 🔐 Autentikasi menggunakan **Google OAuth 2.0**
+- 📚 Manajemen **Courses**
+- 📝 Manajemen **CourseWork**
+- 📄 Manajemen **Student Submissions**
+- ✍️ Manajemen **Penilaian**
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## 📦 Teknologi yang Digunakan
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- Laravel Framework 11.44.7
+- PHP 8.2.12
+- Google API Client for PHP 2.15.4
+- MySQL / MariaDB 8.0.3.0
+- Laravel Sanctum 4.0
 
-## Learning Laravel
+## ⚙️ Instalasi
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+1. **Clone Repository**
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+   ```bash
+   git clone https://github.com/WahyuAgg/intero_be.git
+   cd intero_be
+   ```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+2. **Instalasi Dependency**
 
-## Laravel Sponsors
+   ```bash
+   composer install
+   ```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+3. **Salin File `.env` dan Konfigurasi**
 
-### Premium Partners
+   ```bash
+   cp .env.example .env
+   php artisan key:generate
+   ```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+4. **Konfigurasi Database dan Google API**
+   Atur file `.env` Anda seperti berikut:
 
-## Contributing
+   ```env
+   DB_CONNECTION=mysql
+   DB_HOST=127.0.0.1
+   DB_PORT=3306
+   DB_DATABASE=your_database
+   DB_USERNAME=your_username
+   DB_PASSWORD=your_password
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+   GOOGLE_CLIENT_ID=your_google_client_id
+   GOOGLE_CLIENT_SECRET=your_google_client_secret
+   GOOGLE_REDIRECT_URI=http://localhost:8000/api/google/callback
+   ```
 
-## Code of Conduct
+5. **Migrasi Database**
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+   ```bash
+   php artisan migrate:fresh
+   ```
 
-## Security Vulnerabilities
+6. **Jalankan Server**
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+   ```bash
+   php artisan serve
+   ```
 
-## License
+## 🤵 Sampel akun (untuk testing)
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### Akun pemilik proyek / Sample Teacher
+
+- **email** : [theprocrastinatorman@gmail.com](theprocrastinatorman@gmail.com)
+- **password google account** :   andromeda445
+- **default password lms**   :   lavachicken
+
+
+### Akun Sample Student
+
+- **email** : [ibnumknd@gmail.com](ibnumknd@gmail.com)
+- **password google account** :   exagon.enter
+- **default password lms**   :   lavachicken
+
+### Keterangan Password
+
+- **password lms** adalah password untuk akun LMS yang dibuat ketika register, bisa disesuaikan ketika melakukan regiter melalui LMS dan berlaku untuk login melalui LMS.
+
+- **password google account** adalah password akun google, yaitu akun yang terdaftar di dengan google bukan LMS.
+
+## 🔑 Autentikasi Google OAuth dan Koneksi ke Google Classsroom
+
+> ⚠️ Register dan Autentikasi hanya bisa menggunakan **Sampel akun** yang sudah terdaftar di proyek **google cloud console**
+
+> ℹ️ Untuk melakukan testing menggunakan akun lain, daftarkan akun kedalam proyek Classroom API di **Google cloud console**
+
+> ☁️ Masuk ke google cloud console bisa menggunakan **Akun pemilik proyek**
+
+
+1. 📝 Register (Jika belum punya akun)
+    **endpoint:** /api/auth/register
+    *membuat password lms*
+    **return** Bearer Token.
+    <br>
+
+2. ✔️ Inisiasi koneksi ke akun google
+    /api/google/initiate
+    **parameter**: Bearer Token.
+    **return** *google_login_url* : https://accounts.google.com/....
+    <br>
+
+3. 📶 Sambungkan akun LMS dengan akun google<br>
+    a. Buka *google_login_url* ayng sudah didapatkan sebelumnya
+    *google_login_url* : https://accounts.google.com/....<br>
+    b. Sambungkan dengan akun google berikut
+        Autentikasi OAuth menggunakan google account terkait:
+    - Untuk Teacher (guru)
+
+        - email : [theprocrastinatorman@gmail.com](theprocrastinatorman@gmail.com)
+
+        - password google account :   andromeda445
+
+    - Untuk student (siswa)
+
+        - email : [ibnumknd@gmail.com](ibnumknd@gmail.com)
+
+        - password google account :   exagon.enter
+    ,
+
+4. Akses API
+    - **Bearer Token** harus digunakan ntuk setiap kali mengakses endpoint API.
+
+Token yang diperoleh digunakan untuk mengakses endpoint Google Classroom melalui API wrapper ini.
+
+## 📁 Struktur Endpoint
+
+### 🔐 Auth
+
+| Endpoint | Method | Deskripsi |
+|----------|--------|-----------|
+| `/api/auth/register` | POST | Register user baru |
+| `/api/auth/login` | POST | Login user dan dapatkan token |
+| `/api/auth/logout` | POST | Logout dan cabut token |
+
+### 👤 User (LMS)
+
+| Endpoint | Method | Deskripsi |
+|----------|--------|-----------|
+| `/api/user` | GET | Data user yang sedang login |
+| `/api/user` | POST | Tambah user baru (testing only) |
+| `/api/user/{id}` | GET | Lihat detail user (testing only) |
+| `/api/user/{id}` | PUT | Update user (testing only) |
+| `/api/user/{id}` | DELETE | Hapus user (testing only) |
+| `/api/user/email/{email}` | GET | Cari user berdasarkan email (testing only) |
+
+### 👤 User (Google Classroom)
+
+| Endpoint | Method | Deskripsi |
+|----------|--------|-----------|
+| `/api/user-profiles/{userId}` | GET | Lihat profil user berdasarkan ID |
+
+### 🔑 Google Auth
+
+| Endpoint | Method | Deskripsi |
+|----------|--------|-----------|
+| `/api/google/initiate` | GET | Redirect ke halaman login Google |
+| `/api/google/callback` | GET | Callback dari Google |
+| `/api/google/refresh-token/{userId}` | GET | Refresh token Google user |
+
+### 📚 Courses
+
+| Endpoint | Method | Deskripsi |
+|----------|--------|-----------|
+| `/api/courses` | GET | Ambil semua course |
+| `/api/courses` | POST | Tambah course baru |
+| `/api/courses/{id}` | GET | Lihat detail course |
+| `/api/courses/{id}` | PUT | Update course |
+| `/api/courses/{id}` | DELETE | Hapus course |
+
+### 📢 Announcements
+
+| Endpoint | Method | Deskripsi |
+|----------|--------|-----------|
+| `/api/courses/{courseId}/announcements` | GET | Ambil pengumuman dari course |
+| `/api/courses/{courseId}/announcements` | POST | Tambah pengumuman ke course |
+
+### 📝 Course Work
+
+| Endpoint | Method | Deskripsi |
+|----------|--------|-----------|
+| `/api/courses/{courseId}/coursework` | GET | Ambil daftar tugas dari course |
+| `/api/courses/{courseId}/coursework` | POST | Tambah tugas baru |
+| `/api/courses/{courseId}/coursework/{courseWorkId}` | GET | Lihat detail tugas |
+| `/api/courses/{courseId}/coursework/{courseWorkId}` | DELETE | Hapus tugas |
+
+### 📤 Submissions
+
+| Endpoint | Method | Deskripsi |
+|----------|--------|-----------|
+| `/api/courses/{courseId}/coursework/{courseWorkId}/submissions` | GET | Ambil semua submission dari tugas |
+| `/api/courses/{courseId}/coursework/{courseWorkId}/submissions/{submissionId}` | GET | Lihat detail submission |
+| `/api/courses/{courseId}/coursework/{courseWorkId}/submissions/{submissionId}/grade` | POST | Beri nilai pada submission |
+| `/api/courses/{courseId}/coursework/{courseWorkId}/submissions/{submissionId}/return` | GET | Kembalikan submission ke siswa |
+| `/api/courses/{courseId}/coursework/{courseWorkId}/submissions/{submissionId}/turnin` | POST | Siswa menyerahkan tugas |
+| `/api/courses/{courseId}/coursework/{courseWorkId}/submissions/{submissionId}/attachments` | POST | Tambah/ubah lampiran submission |
+
+### 📦 Materials
+
+| Endpoint | Method | Deskripsi |
+|----------|--------|-----------|
+| `/api/classroom/courses/{courseId}/materials` | GET | Ambil semua materi course |
+| `/api/classroom/courses/{courseId}/materials` | POST | Tambah materi baru |
+| `/api/classroom/courses/{courseId}/materials/{materialId}` | GET | Lihat detail materi |
+| `/api/classroom/courses/{courseId}/materials/{materialId}` | PUT | Update materi |
+| `/api/classroom/courses/{courseId}/materials/{materialId}` | DELETE | Hapus materi |
+
+### 🎯 Topics
+
+| Endpoint | Method | Deskripsi |
+|----------|--------|-----------|
+| `/api/topics/{courseId}` | GET | Ambil semua topik dalam course |
+| `/api/topics/{courseId}` | POST | Tambah topik baru |
+| `/api/topics/{courseId}/{topicId}` | GET | Lihat detail topik |
+| `/api/topics/{courseId}/{topicId}` | PUT | Update topik |
+| `/api/topics/{courseId}/{topicId}` | DELETE | Hapus topik |
+
+### 👨‍🎓 Students
+
+| Endpoint | Method | Deskripsi |
+|----------|--------|-----------|
+| `/api/students/{courseId}` | GET | Ambil semua siswa dalam course |
+| `/api/students/{courseId}` | POST | Tambah siswa ke course |
+| `/api/students/{courseId}/{userId}` | GET | Lihat detail siswa |
+| `/api/students/{courseId}/{userId}` | DELETE | Hapus siswa dari course |
+
+### 👩‍🏫 Teachers
+
+| Endpoint | Method | Deskripsi |
+|----------|--------|-----------|
+| `/api/teachers/{courseId}` | GET | Ambil semua guru dalam course |
+| `/api/teachers/{courseId}` | POST | Tambah guru ke course |
+| `/api/teachers/{courseId}/{userId}` | GET | Lihat detail guru |
+| `/api/teachers/{courseId}/{userId}` | DELETE | Hapus guru dari course |
+
+### ✉️ Invitations
+
+| Endpoint | Method | Deskripsi |
+|----------|--------|-----------|
+| `/api/invitations` | POST | Kirim undangan ke user |
+
+> ⚠️ Beberapa endpoint memerlukan token Google OAuth yang valid.
+
+## ✅ Status
+
+🚧 **Selesai Pengembangan**
+Pull Request dan kontribusi sangat terbuka.
+
+## 🤝 Kontribusi
+
+1. Fork repo ini
+2. Buat branch fitur: `git checkout -b fitur-baru`
+3. Commit perubahan: `git commit -m 'Tambah fitur baru'`
+4. Push ke branch: `git push origin fitur-baru`
+5. Buat Pull Request
