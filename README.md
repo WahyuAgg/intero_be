@@ -68,16 +68,16 @@ Proyek ini adalah **API backend** berbasis **Laravel** yang berfungsi sebagai **
 
 ### Akun pemilik proyek / Sample Teacher
 
-- **email** : [theprocrastinatorman@gmail.com](theprocrastinatorman@gmail.com)
-- **password google account** :   andromeda445
-- **default password lms**   :   lavachicken
+- **email** : [`theprocrastinatorman@gmail.com`](theprocrastinatorman@gmail.com)
+- **password google account** :   `andromeda445`
+- **default password lms**   :   `lavachicken`
 
 
 ### Akun Sample Student
 
-- **email** : [ibnumknd@gmail.com](ibnumknd@gmail.com)
-- **password google account** :   exagon.enter
-- **default password lms**   :   lavachicken
+- **email** : [`ibnumknd@gmail.com`](ibnumknd@gmail.com)
+- **password google account** :   `exagon.enter`
+- **default password lms**   :   `lavachicken`
 
 ### Keterangan Password
 
@@ -95,13 +95,13 @@ Proyek ini adalah **API backend** berbasis **Laravel** yang berfungsi sebagai **
 
 
 1. 📝 Register (Jika belum punya akun)
-    **endpoint:** /api/auth/register
+    **endpoint:** `/api/auth/register`
     *membuat password lms*
     **return** Bearer Token.
     <br>
 
 2. ✔️ Inisiasi koneksi ke akun google
-    /api/google/initiate
+    **endpoint:** `/api/google/initiate`
     **parameter**: Bearer Token.
     **return** *google_login_url* : https://accounts.google.com/....
     <br>
@@ -113,15 +113,15 @@ Proyek ini adalah **API backend** berbasis **Laravel** yang berfungsi sebagai **
         Autentikasi OAuth menggunakan google account terkait:
     - Untuk Teacher (guru)
 
-        - email : [theprocrastinatorman@gmail.com](theprocrastinatorman@gmail.com)
+        - email : [`theprocrastinatorman@gmail.com`](theprocrastinatorman@gmail.com)
 
-        - password google account :   andromeda445
+        - password google account :   `andromeda445`
 
     - Untuk student (siswa)
 
-        - email : [ibnumknd@gmail.com](ibnumknd@gmail.com)
+        - email : [`ibnumknd@gmail.com`](ibnumknd@gmail.com)
 
-        - password google account :   exagon.enter
+        - password google account :   `exagon.enter`
     ,
 
 4. Akses API
