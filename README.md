@@ -1,4 +1,4 @@
-# Intero Backend - Google Classroom API Wrapper
+# Intero Backend - Google Classroom API Integration
 
 Proyek ini adalah **API backend** berbasis **Laravel** yang berfungsi sebagai **wrapper untuk Google Classroom API**, menyederhanakan proses integrasi dan komunikasi antara aplikasi frontend dengan layanan Google Classroom.
 
@@ -50,10 +50,6 @@ Proyek ini adalah **API backend** berbasis **Laravel** yang berfungsi sebagai **
    DB_DATABASE=your_database
    DB_USERNAME=your_username
    DB_PASSWORD=your_password
-
-   GOOGLE_CLIENT_ID=your_google_client_id
-   GOOGLE_CLIENT_SECRET=your_google_client_secret
-   GOOGLE_REDIRECT_URI=http://localhost:8000/api/google/callback
    ```
 
 5. **Migrasi Database**
@@ -95,7 +91,7 @@ Proyek ini adalah **API backend** berbasis **Laravel** yang berfungsi sebagai **
 
 > ℹ️ Untuk melakukan testing menggunakan akun lain, daftarkan akun kedalam proyek Classroom API di **Google cloud console**
 
-> ☁️ Masuk ke google cloud console bisa menggunakan **Akun pemilik proyek**
+> 🌤️ Masuk ke google cloud console bisa menggunakan **Akun pemilik proyek**
 
 
 1. 📝 Register (Jika belum punya akun)
