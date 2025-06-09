@@ -1,14 +1,15 @@
-# Intero Backend - Google Classroom API Integration
+# Back End - Google Classroom API Integration
 
 Proyek ini adalah **API backend** berbasis **Laravel** yang berfungsi sebagai **wrapper untuk Google Classroom API**, menyederhanakan proses integrasi dan komunikasi antara aplikasi frontend dengan layanan Google Classroom.
 
 ## 📌 Fitur Utama
 
-- 🔐 Autentikasi menggunakan **Google OAuth 2.0**
-- 📚 Manajemen **Courses**
-- 📝 Manajemen **CourseWork**
-- 📄 Manajemen **Student Submissions**
-- ✍️ Manajemen **Penilaian**
+- Autentikasi menggunakan **Google OAuth 2.0**
+- Manajemen **Courses**
+- Manajemen **CourseWork**
+- Manajemen **Student Submissions**
+- Manajemen **Penilaian**
+- 
 
 ## 📦 Teknologi yang Digunakan
 
@@ -33,32 +34,47 @@ Proyek ini adalah **API backend** berbasis **Laravel** yang berfungsi sebagai **
    composer install
    ```
 
-3. **Salin File `.env` dan Konfigurasi**
+3. **Download file `.env`**
 
+
+   Download file .env dari link berikut:
+
+
+    [DOWNLOAD .env](https://drive.google.com/file/d/1X77bEQ9moUVcshoPAGFjtpTTdpApM_R0/view?usp=sharing)
+    
+
+   masukkan file .env ke folder project Back End di `intero_be/`
+
+   Jalankan perintah berikut:
    ```bash
-   cp .env.example .env
    php artisan key:generate
    ```
 
-4. **Konfigurasi Database dan Google API**
-   Atur file `.env` Anda seperti berikut:
+4. **Konfigurasi Database**
+   Atur file `.env` seperti berikut:
 
    ```env
    DB_CONNECTION=mysql
    DB_HOST=127.0.0.1
    DB_PORT=3306
-   DB_DATABASE=your_database
-   DB_USERNAME=your_username
-   DB_PASSWORD=your_password
+   DB_DATABASE= <your_database>
+   DB_USERNAME= <your_username>
+   DB_PASSWORD= <your_password>
    ```
 
-5. **Migrasi Database**
+5. **Konfigurasi Back End APP_URL**
+
+    ```bash
+    APP_URL= <this_app_url>
+    ```
+
+6. **Migrasi Database**
 
    ```bash
    php artisan migrate:fresh
    ```
 
-6. **Jalankan Server**
+7. **Jalankan Server**
 
    ```bash
    php artisan serve
