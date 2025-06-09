@@ -9,7 +9,7 @@ Proyek ini adalah **API backend** berbasis **Laravel** yang berfungsi sebagai **
 - Manajemen **CourseWork**
 - Manajemen **Student Submissions**
 - Manajemen **Penilaian**
-- 
+
 
 ## 📦 Teknologi yang Digunakan
 
@@ -62,11 +62,14 @@ Proyek ini adalah **API backend** berbasis **Laravel** yang berfungsi sebagai **
    DB_PASSWORD= <your_password>
    ```
 
-5. **Konfigurasi Back End APP_URL**
+5. **Konfigurasi .env APP_URL**
 
     ```bash
-    APP_URL= <this_app_url>
+    APP_URL=http://127.0.0.1:8000    
     ```
+
+    APP_URL bisa dikonfigurasikan sesuai dengan domain / IP dimana project dijalankan
+
 
 6. **Migrasi Database**
 
@@ -77,7 +80,7 @@ Proyek ini adalah **API backend** berbasis **Laravel** yang berfungsi sebagai **
 7. **Jalankan Server**
 
    ```bash
-   php artisan serve
+   php artisan serve --host=127.0.0.1 --port=8000
    ```
 
 ## 🤵 Sampel akun (untuk testing)
